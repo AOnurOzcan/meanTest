@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="scotchTodo">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Node/Angular Todo App</title>
+
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-resource/angular-resource.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <script src="js/controllers/main.js"></script>
+    <script src="js/services/list.js"></script>
+    <script src="js/router/routes.js"></script>
+    <script src="js/directive/navbar.js"></script>
+    <script src="js/core.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default" ng-controller="navbarController">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="login">Anasayfa</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active" ng-if="!isLogged"><a ui-sref="login">Home</a></li>
+            <li ng-if="isLogged"><a ui-sref="profile">Profile</a></li>
+        </ul>
+        <p class="navbar-btn" ng-if="isLogged">
+            <button class="btn btn-default" ng-click="logout()">Logout</button>
+        </p>
+    </div>
+</nav>
+
+<div class="container">
+
+    <ui-view></ui-view>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<div ng-controller="profileController">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <img src="{{data.facebook.profilePicture}}" class="img-circle" />
+            <h1>Hoşgeldiniz, {{data.facebook.name}}</h1>
+            <form class="form-inline">
+                <input type="text" class="form-control" ng-model="formData.title">
+                <button class="btn btn-primary" ng-click="createList()">Liste Oluştur</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4" ng-repeat="list in lists">
+            <ul class="list-group">
+                <li class="list-group-item active">{{list.title}}</li>
+                <li class="list-group-item" ng-repeat="item in list.items">{{item.item}}</li>
+                <li class="list-group-item" ng-hide="list.items.length">Hiç favori eklenmemiş</li>
+            </ul>
+            <form ng-submit="createItem(list._id, $index)">
+                <input type="text" class="form-control" placeholder="Bir uygulama ekleyin" ng-model="listArray[$index]">
+            </form>
+        </div>
+    </div>
+
+</div>

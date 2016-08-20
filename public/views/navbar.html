@@ -1,0 +1,14 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="login">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active" ng-if="!isLogged"><a ui-sref="login">Home</a></li>
+            <li ng-if="isLogged"><a ui-sref="profile">Profile</a></li>
+        </ul>
+        <p class="navbar-btn" ng-if="isLogged">
+            <button class="btn btn-default" ng-click="logout()">Logout</button>
+        </p>
+    </div>
+</nav>

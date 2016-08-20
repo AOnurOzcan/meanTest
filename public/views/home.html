@@ -1,0 +1,14 @@
+<div class="text-center">
+    <a  ng-if="!isLogged" href="/auth/facebook" class="btn btn-primary btn-lg"><span class="fa fa-facebook"></span> Facebook ile giriş yap</a>
+    <h1>En son oluşturulan listelere bir göz atın.</h1>
+</div>
+
+<div class="row" ng-controller="homeController">
+    <div class="col-md-4" ng-repeat="list in recentLists">
+        <ul class="list-group">
+            <li class="list-group-item active">{{list.title}}</li>
+            <li class="list-group-item" ng-repeat="item in list.items">{{item.item}}</li>
+            <li class="list-group-item" ng-hide="list.items.length">Hiç favori eklenmemiş</li>
+        </ul>
+    </div>
+</div>

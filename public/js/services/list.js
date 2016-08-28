@@ -25,6 +25,9 @@ angular.module('listService', ['ngResource'])
       },
       getRecentLists: function () {
         return $http.get('/api/list/recent');
+      },
+      likeList: function (list_id, item_id) {
+        return $http.get('/api/list/like/' + list_id + "/" + item_id);
       }
     }
   }]);

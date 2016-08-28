@@ -6,9 +6,16 @@ var listSchema = mongoose.Schema({
       item: {
         type: String,
         default: ''
-      }
+      },
+      like: [
+        {
+          type: mongoose.Schema.Types.String,
+          ref: 'User'
+        }
+      ]
     }],
-    user_id: {
+
+    _user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     }
@@ -16,15 +23,5 @@ var listSchema = mongoose.Schema({
   {
     timestamps: true
   });
-
-//
-// listSchema.pre('save', function (next) {
-//   now = new Date();
-//   this.updatedAt = now;
-//   if (!this.createdAt) {
-//     this.createdAt = now;
-//   }
-//   next();
-// });
 
 module.exports = mongoose.model('List', listSchema);

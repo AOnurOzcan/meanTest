@@ -31,6 +31,7 @@ angular.module('todoController', [])
     // when landing on the page, get all todos and show them
     // use the service to get all the todos
     List.get().success(function (data) {
+      console.log(data);
       $scope.lists = data;
       $scope.loading = false;
     });
@@ -87,7 +88,22 @@ angular.module('todoController', [])
   }])
 
   .controller('homeController', ['$scope', 'List', function ($scope, List) {
+    $scope.isExists = function (likes, userId) {
+      var obj = likes.some(function (x) {
+        return x == userId;
+      });
+      return obj !== null && obj != false;
+    };
+
     List.getRecentLists().success(function (lists) {
       $scope.recentLists = lists;
+      console.log(lists);
     });
+
+    $scope.likeList = function (list_id, item_id) {
+      List.likeList(list_id, item_id).success(function (lists) {
+        console.log(lists);
+        $scope.recentLists = lists;
+      });
+    }
   }]);

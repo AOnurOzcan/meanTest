@@ -4,9 +4,11 @@
         <div class="col-md-8 col-md-offset-2 text-center">
             <img src="{{data.facebook.profilePicture}}" class="img-circle" />
             <h1>Hoşgeldiniz, {{data.facebook.name}}</h1>
-            <form class="form-inline">
-                <input type="text" class="form-control" ng-model="formData.title">
-                <button class="btn btn-primary" ng-click="createList()">Liste Oluştur</button>
+            <form class="form-inline" name="listForm">
+                <input type="text" class="form-control" name="listName" ng-model="formData.title" required>
+                <button class="btn btn-primary" ng-click="createList()" ng-disabled="listForm.listName.$invalid">Liste
+                    Oluştur
+                </button>
             </form>
         </div>
     </div>

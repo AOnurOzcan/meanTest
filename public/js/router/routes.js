@@ -15,13 +15,24 @@ angular.module('routes', ['ui.router'])
 //     });
 //   })
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+
+    $httpProvider.defaults.cache = false;
+    if (!$httpProvider.defaults.headers.get) {
+      $httpProvider.defaults.headers.get = {};
+    }
+    // disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
+
 
     $stateProvider
 
       .state('login', {
         url: '/',
-        templateUrl: 'views/home.html'
+        templateUrl: 'views/home.html',
+        resolve: {
+          user: checkHome
+        }
       })
 
       .state('profile', {
@@ -31,7 +42,7 @@ angular.module('routes', ['ui.router'])
         resolve: {
           user: check
         }
-      })
+      });
 
     $urlRouterProvider.otherwise("/");
 
@@ -41,11 +52,34 @@ var check = function ($q, List, $state, $rootScope) {
   var deferred = $q.defer();
   List.isLoggedIn().success(function (userLoggedIn) {
     if (userLoggedIn) {
+      $rootScope.isLogged = true;
+      $rootScope.userId = userLoggedIn._id;
       deferred.resolve();
     } else {
       deferred.reject();
+      $rootScope.isLogged = false;
+      delete $rootScope.userId;
       $state.go("login");
     }
   });
+  return deferred.promise;
+};
+
+var checkHome = function ($q, List, $state, $rootScope) {
+  var deferred = $q.defer();
+  if (!$rootScope.hasOwnProperty("isLogged")) {
+    List.isLoggedIn().success(function (userLoggedIn) {
+      if (userLoggedIn) {
+        $rootScope.isLogged = true;
+        $rootScope.userId = userLoggedIn._id;
+      } else {
+        $rootScope.isLogged = false;
+        delete $rootScope.userId;
+      }
+      deferred.resolve();
+    });
+  } else {
+    deferred.resolve();
+  }
   return deferred.promise;
 };

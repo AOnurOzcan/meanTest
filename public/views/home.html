@@ -1,14 +1,36 @@
 <div class="text-center">
-    <a  ng-if="!isLogged" href="/auth/facebook" class="btn btn-primary btn-lg"><span class="fa fa-facebook"></span> Facebook ile giriş yap</a>
+    <a ng-if="!isLogged" href="/auth/facebook" class="btn btn-primary btn-lg"><span class="fa fa-facebook"></span>
+        Facebook ile giriş yap</a>
     <h1>En son oluşturulan listelere bir göz atın.</h1>
 </div>
 
 <div class="row" ng-controller="homeController">
     <div class="col-md-4" ng-repeat="list in recentLists">
         <ul class="list-group">
-            <li class="list-group-item active">{{list.title}}</li>
-            <li class="list-group-item" ng-repeat="item in list.items">{{item.item}}</li>
-            <li class="list-group-item" ng-hide="list.items.length">Hiç favori eklenmemiş</li>
+            <li class="list-group-item active">
+                <h5 class="list-group-item-heading">{{list.title}}
+                    <span class="pull-right">
+                    <img height="20px" width="20px" ng-src="{{list._user.facebook.profilePicture}}"
+                         title="{{list._user.facebook.name}}" class="img-circle">
+                </span>
+                </h5>
+            </li>
+            <li class="list-group-item" ng-repeat="item in list.items">
+                <h5 class="list-group-item-heading">
+                    {{item.item}}
+                    <span ng-if="isLogged" ng-click="likeList(list._id,item._id)" class="pull-right"
+                          style="cursor: pointer;">
+                        <i class="fa fa-heart" ng-class="{'red':isExists(item.like, userId)}"></i>
+                        {{item.like.length}}
+                     </span>
+                    <span ng-if="!isLogged" class="pull-right">
+                        <i class="fa fa-heart red"></i> {{item.like.length}}
+                    </span>
+                </h5>
+                <p class="list-group-item-text">Integer et eros finibus, pharetra velit non, eleifend libero. Ut nec
+                    felis nulla. Integer venenatis est turpis, et viverra metus venenatis sit amet. </p>
+            </li>
+            <li class="list-group-item" ng-hide="list.items.length">Bu liste boş :(</li>
         </ul>
     </div>
 </div>
